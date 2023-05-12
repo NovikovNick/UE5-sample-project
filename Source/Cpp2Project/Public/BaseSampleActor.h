@@ -15,7 +15,7 @@ enum class EMovementType : uint8
 };
 
 USTRUCT(BlueprintType)
-struct FMovementData
+struct FSampleData
 {
   GENERATED_USTRUCT_BODY()
 
@@ -30,6 +30,9 @@ struct FMovementData
 
   UPROPERTY(EditAnywhere, Category = "Design")
   FLinearColor Color = FLinearColor::Black;
+
+  UPROPERTY(EditAnywhere, Category = "Design")
+  float TimerRate = 3.f;
 };
 
 UCLASS()
@@ -49,7 +52,7 @@ class CPP2PROJECT_API ABaseSampleActor : public AActor
   UStaticMeshComponent* BaseMesh;
 
   UPROPERTY(EditAnywhere, Category = "Movement")
-  FMovementData MovementData;
+  FSampleData Data;
 
   UPROPERTY(EditAnywhere, Category = "Weapon")
   int32 weapon_num = 4;
@@ -72,8 +75,12 @@ class CPP2PROJECT_API ABaseSampleActor : public AActor
 
   private:
   FVector InitialLocation;
+  FTimerHandle TimerHandler;
+  int32 MaxTimerCount = 10, CurrTimerCount = 0;
+
   void HandleMovement();
   void PrintTypes();
   void PrintStringTypes();
   void SetColor(const FLinearColor& color);
+  void OnTimerFired();
 };

@@ -4,6 +4,7 @@
 
 #include "Materials/MaterialInstanceDynamic.h"
 #include "Engine/Engine.h"
+#include "TimerManager.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogSample, Display, All)
 
@@ -23,8 +24,10 @@ void ABaseSampleActor::BeginPlay()
   Super::BeginPlay();
   InitialLocation = GetActorLocation();
 
-  SetColor(MovementData.Color);
+  SetColor(Data.Color);
 
+  GetWorldTimerManager().SetTimer(
+      TimerHandler, this, &ABaseSampleActor::OnTimerFired, Data.TimerRate, true);
   // printStringTypes();
   // PrintTypes();
 }
@@ -39,7 +42,7 @@ void ABaseSampleActor::Tick(float DeltaTime)
 
 void ABaseSampleActor::HandleMovement()
 {
-  switch (MovementData.MovementType)
+  switch (Data.MovementType)
   {
     case EMovementType::CIRCLE:
     {
@@ -47,10 +50,8 @@ void ABaseSampleActor::HandleMovement()
       auto location = transform.GetLocation();
 
       auto time = GetWorld()->GetTimeSeconds();
-      location.Z = InitialLocation.Z +
-                   MovementData.Amplitude * FMath::Sin(time * MovementData.Frequency);
-      location.X = InitialLocation.X +
-                   MovementData.Amplitude * FMath::Cos(time * MovementData.Frequency);
+      location.Z = InitialLocation.Z + Data.Amplitude * FMath::Sin(time * Data.Frequency);
+      location.X = InitialLocation.X + Data.Amplitude * FMath::Cos(time * Data.Frequency);
       SetActorLocation(location);
     }
   }
@@ -91,5 +92,19 @@ void ABaseSampleActor::SetColor(const FLinearColor& color)
   if (DynMaterial)
   {
     DynMaterial->SetVectorParameterValue("color", color);
+  }
+}
+
+void ABaseSampleActor::OnTimerFired()
+{
+  if (++CurrTimerCount <= MaxTimerCount)
+  {
+    FLinearColor newColor = FLinearColor::MakeRandomColor();
+    SetColor(newColor);
+    UE_LOG(LogSample,
+           Warning,
+           TEXT("%d# Color changed %s"),
+           CurrTimerCount,
+           *newColor.ToString());
   }
 }
