@@ -87,6 +87,8 @@ void ABaseSampleActor::PrintStringTypes()
 
 void ABaseSampleActor::SetColor(const FLinearColor& color)
 {
+  if (!BaseMesh) return;
+
   UMaterialInstanceDynamic* DynMaterial =
       BaseMesh->CreateAndSetMaterialInstanceDynamic(0);
   if (DynMaterial)

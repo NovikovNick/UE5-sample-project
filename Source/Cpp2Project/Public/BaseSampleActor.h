@@ -44,6 +44,8 @@ class CPP2PROJECT_API ABaseSampleActor : public AActor
   // Sets default values for this actor's properties
   ABaseSampleActor();
 
+  void SetData(const FSampleData& val) { Data = val; }
+
   protected:
   // Called when the game starts or when spawned
   virtual void BeginPlay() override;
