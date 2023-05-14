@@ -14,4 +14,6 @@ class CPP2PROJECT_API ACpp2ProjectGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
 	
+		public:
+  ACpp2ProjectGameModeBase();
 };
