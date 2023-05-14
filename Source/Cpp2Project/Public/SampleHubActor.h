@@ -51,4 +51,14 @@ class CPP2PROJECT_API ASampleHubActor : public AActor
 
   UPROPERTY(EditAnywhere)
   TArray<FSamplePayload> SamplePayload;
+
+  private:
+  void SpawnSamplePayload();
+  void Spawn1();
+  void Spawn2();
+
+  UFUNCTION()
+  void OnColorChanged(const FLinearColor& Color, const FString& Name);
+
+  void OnTimeFinished(AActor* Actor);
 };

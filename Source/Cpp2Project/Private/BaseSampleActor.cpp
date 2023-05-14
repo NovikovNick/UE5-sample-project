@@ -32,6 +32,12 @@ void ABaseSampleActor::BeginPlay()
   // PrintTypes();
 }
 
+void ABaseSampleActor::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+  UE_LOG(LogSample, Error, TEXT("I am destroying: %s"), *GetName());
+  Super::EndPlay(EndPlayReason);
+}
+
 // Called every frame
 void ABaseSampleActor::Tick(float DeltaTime)
 {
@@ -108,5 +114,12 @@ void ABaseSampleActor::OnTimerFired()
            TEXT("%d# Color changed %s"),
            CurrTimerCount,
            *newColor.ToString());
+
+    OnColorChanged.Broadcast(newColor, GetName());
+  }
+  else
+  {
+    GetWorldTimerManager().ClearTimer(TimerHandler);
+    OnTimeFinished.Broadcast(this);
   }
 }
