@@ -6,6 +6,8 @@
 #include "GameFramework/Pawn.h"
 #include "SandboxPawn.generated.h"
 
+class UCameraComponent;
+
 UCLASS()
 class CPP2PROJECT_API ASandboxPawn : public APawn
 {
@@ -21,6 +23,14 @@ class CPP2PROJECT_API ASandboxPawn : public APawn
   UPROPERTY(EditAnywhere)
   float Velocity = 300.f;
 
+  UPROPERTY(VisibleAnywhere)
+  UStaticMeshComponent* Mesh;
+
+  UPROPERTY(VisibleAnywhere)
+  UCameraComponent* Camera;
+
+
+
   protected:
   // Called when the game starts or when spawned
   virtual void BeginPlay() override;
@@ -28,6 +38,9 @@ class CPP2PROJECT_API ASandboxPawn : public APawn
   public:
   // Called every frame
   virtual void Tick(float DeltaTime) override;
+
+  virtual void PossessedBy(AController* controller) override;
+  virtual void UnPossessed() override;
 
   // Called to bind functionality to input
   virtual void SetupPlayerInputComponent(
