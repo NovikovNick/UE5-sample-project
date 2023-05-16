@@ -5,6 +5,7 @@
 #include "Materials/MaterialInstanceDynamic.h"
 #include "Engine/Engine.h"
 #include "TimerManager.h"
+#include "Components/StaticMeshComponent.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogSample, Display, All)
 

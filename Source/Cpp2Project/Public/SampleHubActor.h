@@ -7,6 +7,8 @@
 #include "BaseSampleActor.h"
 #include "SampleHubActor.generated.h"
 
+class UStaticMeshComponent;
+
 USTRUCT(BlueprintType)
 struct FSamplePayload
 {
